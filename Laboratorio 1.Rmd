@@ -1,0 +1,128 @@
+---
+title: "Laboratorio 1"
+author: "Marco Ocampo"
+date: "2023-08-02"
+output: rmarkdown::github_document
+---
+
+# Laboratorio 1
+## Nombre: Marco Ocampo Sebastian
+
+### Cargando librerías y archivos
+
+```{r, echo=FALSE}
+
+setwd("C:/Users/Marco/Documents/Segundo Semestre 2023/Data Wrangling/Data laboratorio 1")
+
+# Librerías
+library(tidyverse)
+library(readr)
+library(readxl)
+library(lubridate)
+
+# Cargando archivos
+
+Lista_archivos <- c("01-2018.xlsx", "02-2018.xlsx", "03-2018.xlsx", "04-2018.xlsx", "05-2018.xlsx", "06-2018.xlsx", "07-2018.xlsx", "08-2018.xlsx", "09-2018.xlsx", "10-2018.xlsx", "11-2018.xlsx")
+
+cargar_archivos <- function(ruta) {
+  contenido_excel <- read_excel(ruta)
+  return(contenido_excel)
+}
+
+lista_contenidos <- lapply(Lista_archivos, cargar_archivos)
+
+# Agregar columna de año 
+
+Agregar <- function(lista_contenidos) {
+  lista_contenidos$Año <- 2018
+  lista_contenidos$Mes <- 0
+  
+  return(lista_contenidos)
+}
+
+lista_contenidos <- lapply(lista_contenidos, Agregar)
+LISTA <- lista_contenidos
+
+# Reemplazar los valores de la columna Mes
+
+Excel_01 <- LISTA[[1]]
+Excel_01$Mes <- 01
+Excel_02 <- LISTA[[2]]
+Excel_02$Mes <- 02
+Excel_03 <- LISTA[[3]]
+Excel_03$Mes <- 03
+Excel_04 <- LISTA[[4]]
+Excel_04$Mes <- 04
+Excel_05 <- LISTA[[5]]
+Excel_05$Mes <- 05
+Excel_06 <- LISTA[[6]]
+Excel_06$Mes <- 06
+Excel_07 <- LISTA[[7]]
+Excel_07$Mes <- 07
+Excel_07$TIPO <- NULL
+Excel_08 <- LISTA[[8]]
+Excel_08$Mes <- 08
+Excel_08$TIPO <- NULL
+Excel_08$...10 <- NULL
+Excel_09 <- LISTA[[9]]
+Excel_09$Mes <- 09
+Excel_09$TIPO <- NULL
+Excel_09$...10 <- NULL
+Excel_10 <- LISTA[[10]]
+Excel_10$Mes <- 10
+Excel_10$TIPO <- NULL
+Excel_11 <- LISTA[[11]]
+Excel_11$Mes <- 11
+Excel_11$TIPO <- NULL
+Excel_11$...10 <- NULL
+
+### Unificamos la tabla
+
+DATA <- bind_rows(Excel_01, Excel_02, Excel_03, Excel_04, Excel_05, Excel_06,Excel_07, Excel_08, Excel_09, Excel_10, Excel_11)
+
+#------------------------------------------------------------------
+
+# Exportar el dataset a un csv
+
+write.csv(DATA, file = "DATA Lab 1.csv")
+
+# Calcular la Moda de 3 columnas
+
+calcular_moda <- function(columna) {
+  moda <- names(which.max(table(columna)))
+  return(moda)
+}
+
+moda_UBICACION <- lapply(DATA["UBICACION"], calcular_moda)
+moda_Q <- lapply(DATA["Q"], calcular_moda)
+moda_CREDITO <- lapply(DATA["CREDITO"], calcular_moda)
+
+
+moda_UBICACION <- unlist(moda_UBICACION)
+moda_Q <- unlist(moda_Q)
+moda_CREDITO <- unlist(moda_CREDITO)
+
+###----------------------------------------------------------------------
+
+
+```
+
+```{r}
+
+head(DATA)
+print("El dataset completo tiene 2180 observaciones y 10 variables ya que elimine las columnas que no era consistentes con el resto y ademas tenían muchos NA values")
+```
+```{r}
+# Moda de las 3 variables solicitadas
+print(moda_UBICACION)
+print(moda_Q)
+print(moda_CREDITO)
+```
+
+```{r}
+# Parque vehicular según SAT a diciembre del 2019
+
+DATOS_SAT <- read_delim("INE_PARQUE_VEHICULAR_080120.txt", delim = "|")
+head(DATOS_SAT)
+```
+
