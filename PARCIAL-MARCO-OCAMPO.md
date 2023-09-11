@@ -1,0 +1,303 @@
+dw-2023-parcial-1
+================
+Tepi
+9/11/2023
+
+# Examen parcial
+
+Indicaciones generales:
+
+- Usted tiene el período de la clase para resolver el examen parcial.
+
+- La entrega del parcial, al igual que las tareas, es por medio de su
+  cuenta de github, pegando el link en el portal de MiU.
+
+- Pueden hacer uso del material del curso e internet (stackoverflow,
+  etc.). Sin embargo, si encontramos algún indicio de copia, se anulará
+  el exámen para los estudiantes involucrados. Por lo tanto, aconsejamos
+  no compartir las agregaciones que generen.
+
+## Sección 0: Preguntas de temas vistos en clase (20pts)
+
+- Responda las siguientes preguntas de temas que fueron tocados en
+  clase.
+
+1.  ¿Qué es una ufunc y por qué debemos de utilizarlas cuando
+    programamos trabajando datos?
+
+Respueta 1: Las ufunc son las funciones universales y lo que hacen es
+que trabajamos con los arrays. Esto permite de que trabajemos
+vectorizado y así nuestro trabajo sea más sencillo porque así nos
+ahorramos la iteración. Entónces, en lugar de trabajar programando
+ciclos, tenemos funciones que se aplican a todo el array de datos.
+
+2.  Es una técnica en programación numérica que amplía los objetos que
+    son de menor dimensión para que sean compatibles con los de mayor
+    dimensión.De un ejemplo en R
+
+Respuesta 2:
+
+El broadcasting es una técnica de programación entre matrices o arreglos
+de datos de diferentes dimensiones para trabajarlos de manera
+compatible. El broadcasting permite que los arreglos de menor dimensión
+se expandan automáticamente para que tengan la misma forma que los
+arreglos de mayor dimensión antes de realizar la operación.
+
+A \<- c(1,2,3,4,5) B \<- c(1,2,3,4,5,6,7,8)
+
+print(A+B)
+
+3.  ¿Qué es el axioma de elegibilidad y por qué es útil al momento de
+    hacer análisis de datos?
+
+Respuesta 3: El axioma de elegibilidad nos dice de que para los
+conjuntos no vacíos, existe otro conjunto que contiene un elemento en
+cada uno de ellos. Este concepto puede ser muy útil para que poder
+llevar a cabo un análisis exploratorio de datos. De igual manera también
+puede ser útil para que hacer muestreos aleatorios estadísticos y poder
+obtener información importante de los datos que ya tenemos.
+
+4.  Cuál es la relación entre la granularidad y la agregación de datos?
+    Mencione un breve ejemplo. Luego, exploque cuál es la granularidad o
+    agregación requerida para poder generar un reporte como el
+    siguiente:
+
+| Pais | Usuarios |
+|------|----------|
+| US   | 1,934    |
+| UK   | 2,133    |
+| DE   | 1,234    |
+| FR   | 4,332    |
+| ROW  | 943      |
+
+Respuesta 4: Es importante tener en cuenta las preguntas que queremos
+responder y al mismo tiempo, crear reportes o contenido que nos facilite
+la toma de decisiones. La granuralidad responde a qué tan específico
+quereremos que esos datos estén. En el ejemplo brindado, tenemos de que
+la agregación está según la cantidad de usuarios que hay y la
+granularidad está por país. Si hubiéramos deseaedo, podríamos haber
+hecho un reporte con granularidad según las provincias de estos mismos
+países y así hasta poder llegar a lo mínimo de nuestra información.
+
+## Sección I: Preguntas teóricas. (50pts)
+
+- Existen 10 preguntas directas en este Rmarkdown, de las cuales usted
+  deberá responder 5. Las 5 a responder estarán determinadas por un
+  muestreo aleatorio basado en su número de carné.
+
+- Ingrese su número de carné en `set.seed()` y corra el chunk de R para
+  determinar cuáles preguntas debe responder.
+
+``` r
+set.seed("20200411") 
+v<- 1:10
+preguntas <-sort(sample(v, size = 5, replace = FALSE ))
+
+paste0("Mis preguntas a resolver son: ",paste0(preguntas,collapse = ", "))
+```
+
+    ## [1] "Mis preguntas a resolver son: 3, 4, 5, 6, 8"
+
+### Mis preguntas a resolver son la 3,4,5,6,8
+
+### Listado de preguntas teóricas
+
+3.  ¿Por qué en R utilizamos funciones de la familia apply
+    (lapply,vapply) en lugar de utilizar ciclos?
+
+Respuesta 3: Esto es porque R es un tipo de lenguaje interpretativo y
+trabaja de manera vectorizada. Por lo tanto, no es ncesario usar ciclos
+en Rstudio ya que las funciones de la familia apply vienen a sustituir
+los ciclos aplicando las mismas instrucciones a los elementos de un
+mismo array de datos.
+
+4.  ¿Cuál es la diferencia entre utilizar `==` y `=` en R?
+
+Respuesta 4: Si nosotros usamos `=` es lo mismo que esto `<-` es decir
+que es un operador para asignar variables y valores. Usualmente lo
+usamos para nombrar las variables o trabajar algunas funciones. Si
+nosostros usamos los signos de `==` es el equivalente a “igual que” este
+los usamos cuando estamos filtrando por ejemplo.
+
+5.  ¿Cuál es la forma correcta de cargar un archivo de texto donde el
+    delimitador es `:`?
+
+Respuesta 5: Lo que se puede hacer es utilizar la función de `read_csv`
+y el momento que estamos poniendo los parámetros colocamos después del
+nombre del archivo el comando de sep = “:”, entonces ya le indicamos a R
+de que queremos que separe nuestro archivo por `:`
+
+6.  ¿Qué es un vector y en qué se diferencia en una lista en R?
+
+Respuesta 6: El vector es una estructura básica de datos y solo tienen
+una dimensión al igual de que únicamente solo admiten un solo tipo de
+dato. Las listas por otra parte, tienen la cualidad de que permiten
+almacenar varios tipos de datos y en la lista se pueden agrupar varios
+tipos de datos.
+
+8.  Si en un dataframe, a una variable de tipo `factor` le agrego un
+    nuevo elemento que *no se encuentra en los niveles existentes*,
+    ¿cuál sería el resultado esperado y por qué?
+    - El nuevo elemento
+    - `NA`
+
+Respuesta 8: El resultado sería de que lo pondría como NA, esto por el
+hecho de que cuando trabajamos con variables tipo factor lo que tenemos
+es que son categorías de que tienen un nivel. Por lo tanto ese nuevo
+elemento que estamos agregando no pertenece a ninguna de esa categoría.
+
+Extra: ¿Cuántos posibles exámenes de 5 preguntas se pueden realizar
+utilizando como banco las diez acá presentadas? (responder con código de
+R.)
+
+``` r
+#install.packages("gtools")
+library(gtools)
+```
+
+    ## Warning: package 'gtools' was built under R version 4.3.1
+
+``` r
+N <- 10  # Número de elementos
+n <- 5 # grupos de 5 en 5
+ 
+combinaciones <- combinations(N, n, repeats.allowed = FALSE)
+length(combinaciones) ### Se pueden hacer 1260 combinaciones de examenes
+```
+
+    ## [1] 1260
+
+## Sección II Preguntas prácticas. (30pts)
+
+- Conteste las siguientes preguntas utilizando sus conocimientos de R.
+  Adjunte el código que utilizó para llegar a sus conclusiones en un
+  chunk del markdown.
+
+A. De los clientes que están en más de un país,¿cuál cree que es el más
+rentable y por qué?
+
+B. Estrategia de negocio ha decidido que ya no operará en aquellos
+territorios cuyas pérdidas sean “considerables”. Bajo su criterio,
+¿cuáles son estos territorios y por qué ya no debemos operar ahí?
+
+### I. Preguntas teóricas
+
+## A
+
+``` r
+library(tidyverse)
+```
+
+    ## Warning: package 'tidyverse' was built under R version 4.3.1
+
+    ## Warning: package 'readr' was built under R version 4.3.1
+
+    ## Warning: package 'purrr' was built under R version 4.3.1
+
+    ## Warning: package 'stringr' was built under R version 4.3.1
+
+    ## Warning: package 'lubridate' was built under R version 4.3.1
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+    ## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+    ## ✔ purrr     1.0.1     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+DATA <- readRDS("~/Segundo Semestre 2023/Data Wrangling/parcial_anonimo.rds")
+
+DATA %>% 
+  select(DATE, Territorio, Cliente, Venta, Pais) %>% 
+  group_by(Cliente, Pais) %>% 
+  filter(Venta >= 10000) %>% 
+  summarise(Ventas = sum(Venta))
+```
+
+    ## `summarise()` has grouped output by 'Cliente'. You can override using the
+    ## `.groups` argument.
+
+    ## # A tibble: 15 × 3
+    ## # Groups:   Cliente [15]
+    ##    Cliente  Pais      Ventas
+    ##    <chr>    <chr>      <dbl>
+    ##  1 0421943f 4f03bd9b  37025.
+    ##  2 37c64d32 4f03bd9b  14210.
+    ##  3 4724166d 4f03bd9b  23413.
+    ##  4 54323317 4f03bd9b  33582.
+    ##  5 701697ba 4f03bd9b  13142.
+    ##  6 8a11d40d 4f03bd9b  13280.
+    ##  7 9314226b 4f03bd9b 126636 
+    ##  8 934afcdc 4f03bd9b  23471 
+    ##  9 93730e73 4f03bd9b  11350 
+    ## 10 af267306 4f03bd9b  33641.
+    ## 11 d5186a5c 4f03bd9b  19554.
+    ## 12 dbeae6ad 4f03bd9b  51913.
+    ## 13 dd0d7f4d 4f03bd9b  59055.
+    ## 14 f217abbd 4f03bd9b  14251.
+    ## 15 fc086e6b 4f03bd9b  11350
+
+``` r
+###  El cliente 9314226b    4f03bd9b    126636.00   es el cliente que más a comprado
+```
+
+B. Estrategia de negocio ha decidido que ya no operará en aquellos
+territorios cuyas pérdidas sean “considerables”. Bajo su criterio,
+¿cuáles son estos territorios y por qué ya no debemos operar ahí?
+
+## B
+
+``` r
+library(tidyverse)
+```
+
+    ## Warning: package 'tidyverse' was built under R version 4.3.1
+
+    ## Warning: package 'readr' was built under R version 4.3.1
+
+    ## Warning: package 'purrr' was built under R version 4.3.1
+
+    ## Warning: package 'stringr' was built under R version 4.3.1
+
+    ## Warning: package 'lubridate' was built under R version 4.3.1
+
+    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ## ✔ dplyr     1.1.2     ✔ readr     2.1.4
+    ## ✔ forcats   1.0.0     ✔ stringr   1.5.0
+    ## ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+    ## ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+    ## ✔ purrr     1.0.1     
+    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ## ✖ dplyr::filter() masks stats::filter()
+    ## ✖ dplyr::lag()    masks stats::lag()
+    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+
+``` r
+DATA <- readRDS("~/Segundo Semestre 2023/Data Wrangling/parcial_anonimo.rds")
+
+DATA %>% 
+  select(DATE, Territorio, Cliente, Venta, Pais) %>% 
+  group_by(Territorio) %>% 
+  filter(Venta <= -400) %>% 
+  summarise(Ventas = sum(Venta))
+```
+
+    ## # A tibble: 3 × 2
+    ##   Territorio Ventas
+    ##   <chr>       <dbl>
+    ## 1 72520ba2    -623.
+    ## 2 75298f79    -425.
+    ## 3 8f79b7f8    -556
+
+Respuesta B práctica: Tomando en cuenta las pérdidas de estos
+territorios, o que tenemos que hacer es eliminar esos territorios de
+nuestra operación
+
+72520ba2 -622.60  
+75298f79 -424.96  
+8f79b7f8 -556.00
