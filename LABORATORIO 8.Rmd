@@ -1,0 +1,87 @@
+---
+title: "LABORATORIO 8"
+author: "Marco Ocampo"
+date: "2023-10-12"
+output: rmarkdown::github_document
+---
+
+### Laboratorio 8: Missing value
+
+#### Parte 1:
+
+##### 1.	Reporte detallado de missing data para todas las columnas. (5%)
+
+
+
+```{r,echo=TRUE, cache=TRUE}
+library(tidyverse)
+library(readxl)
+
+TITANIC <- read_csv("~/Segundo Semestre 2023/Data Wrangling/titanic_MD.csv")
+head(TITANIC)
+TITANIC$Sex <- gsub("\\?", NA, TITANIC$Sex)
+colSums(is.na(TITANIC))
+```
+RESPUESTA 1: 
+Tenemos de que las columnas que tienen NA values son: Sex = 51 ,Age = 25, SibSp = 3, Parch = 12, Fare = 8, Embarked = 12
+
+##### 2.	Para cada columna especificar qué tipo de modelo se utilizará (solo el nombre y el porqué) y qué valores se le darán a todos los missing values. (Ej. Imputación sectorizada por la moda, bins, y cualquier otro método visto anteriormente). (10%)
+
+RESPUESTA 2: 
+Sex = Regresión logística ya que esta columna solo puede tomar los valores de masculino y femenino, además se hará para que el muestreo de datos siga sin tener sesgo.
+Age = Aquí se hará una imputación sectorizada por la mediana es decir que pondré la mediana de hombres los que son hombres y la mediana de mujeres las observaciones que son mujeres
+SibSp = Imputación por la moda ya que son 3 valores faltantes 
+Parch = Imputación por la moda 
+Fare = Imputación por la media, ya que esta variable parece ser de que tiene una distribución normal.
+Embarked = Imputación por la moda
+
+##### 3.	Reporte de qué filas están completas (5%)
+
+
+RESPUESTA 3:
+Las filas que están completas son: PassengerId, Survived, Pclass, Name, Ticket, Cabin
+
+#### 4.	Utilizar los siguientes métodos para cada columna que contiene missing values: (50%)
+##### a.	Imputación general (media, moda y mediana)
+##### b.	Modelo de regresión lineal 
+##### c.	Outliers: Uno de los dos métodos vistos en clase (Standard deviation approach o Percentile     approach)
+
+```{r}
+### COLUMNA DE SEX
+TITANIC$Sex <- gsub("male", 1, TITANIC$Sex)
+TITANIC$Sex <- gsub("fe1", 0, TITANIC$Sex)
+
+TITANIC$Sex <- as.numeric(TITANIC$Sex)
+
+moda <- names(sort(table(TITANIC$Sex), decreasing = TRUE)[1])
+cat("La moda de la columna es:", moda, "\n")
+
+media <- mean(na.omit(TITANIC$Sex))
+mediana <- median(na.omit(TITANIC$Sex))
+
+TITANIC$Sex1 <- replace(TITANIC$Sex, is.na(TITANIC$Sex), 1)
+TITANIC$Sex2 <- replace(TITANIC$Sex, is.na(TITANIC$Sex), 1)
+TITANIC$Sex3 <- replace(TITANIC$Sex, is.na(TITANIC$Sex), mediana)
+
+TITANIC$Sex <- as.factor(TITANIC$Sex)
+
+model <- glm(Sex ~ Age + Survived, data = TITANIC, family = "binomial")
+TITANIC$Sex[is.na(TITANIC$Sex)] <- predict(model, TITANIC)
+```
+
+
+#### 5.	Al comparar los métodos del inciso 4 contra “titanic.csv”, ¿Qué método (para cada columna) se acerca más a la realidad y por qué? (20%)
+
+#### 6.	Conclusiones (10%)
+
+#### Parte 2:
+
+Utilizando la misma tabla de “titanic_MD.csv” en R o en Python realice lo siguiente:
+
+1.	Luego del pre-procesamiento de la data con Missing Values, normalice las columnas numéricas por los métodos: (50%)
+  a.	Standarization
+  b.	MinMaxScaling
+  c.	MaxAbsScaler
+  
+2.	Compare los estadísticos que considere más importantes para su conclusión y compare contra la data completa de “titanic.csv” (deberán de normalizar también). (50%)
+
